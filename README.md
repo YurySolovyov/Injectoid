@@ -60,5 +60,5 @@ Used to name module in an app.
 ###`app.run(resolvable);`
 * `resolvable: [function]`. Function is called with resolved modules as arguments. Useful if you need to obtain a reference to some module, or call something just once.
 
-### Lincense
+### License
 The MIT License (MIT)
