@@ -47,18 +47,17 @@ Used to name module in an app.
 * `provider: [function | object | value]`. Can be a factory function, or just plain JavaScript value/object.
 
   * If function form is used, DI feature becomes available.
-    * **NOTE:** function MUST return some value/object, so module can be treated as initialized.
+    * **NOTE:** function MUST return some value/object, so module can be treated as available.
 
-    * Required modules become available as arguments of factory function.
+    * Required modules become available as arguments of `provider` function.
 
-    * If not all required modules are available, factory function is put into a queue, until all required modules are registered.
-
-
+    * If some required modules are not available, `provider` function is put into a queue, until all required modules are available.
 
   * If value/object form is used, module gets immediately available as `moduleName`
 
 ###`app.run(resolvable);`
 * `resolvable: [function]`. Function is called with resolved modules as arguments. Useful if you need to obtain a reference to some module, or call something just once.
+    * If some required modules are not available, `resolvable` function is put into a queue, as in `app.provide` case.
 
 ### License
 The MIT License (MIT)
