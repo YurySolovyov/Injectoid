@@ -56,7 +56,8 @@ Used to name module in an app.
   * If value/object form is used, module gets immediately available as `moduleName`
 
 ###`app.run(resolvable);`
-* `resolvable: [function]`. Function is called with resolved modules as arguments. Useful if you need to obtain a reference to some module, or call something just once.
+Calls `resolvable` with resolved modules. Useful if you need to obtain a reference to some module, or call something just once.
+* `resolvable: [function]`. Called with resolved modules as arguments. 
     * If some required modules are not available, `resolvable` function is put into a queue, as in `app.provide` case.
 
 ### License
