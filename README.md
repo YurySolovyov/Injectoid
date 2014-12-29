@@ -2,6 +2,19 @@ Injectoid
 ========
 Injectoid helps you to compose your app using modules
 
+###Installing
+npm:
+
+`npm install injectoid`
+```javascript
+var Injectoid = require('injectoid').Injectoid;
+```
+browsers:
+
+Should work with require.js and common.js (not tested)
+or
+Works as global `Injectoid` constructor
+
 ###Usage
 
 ```javascript
