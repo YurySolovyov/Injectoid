@@ -7,7 +7,7 @@
         factory(root);
     }
 }(this, function (exports) {
-    var Injector = function() {
+    var Injectoid = function() {
         var self = this;
         var funcRegexp = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
         var readyModules = {};
@@ -112,5 +112,5 @@
         };
 
     };
-    exports.Injector = Injector;
+    exports.Injectoid = Injectoid;
 }));
