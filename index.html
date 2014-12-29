@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <title>injector</title>
+<script src="dist/injector.js"></script>
+<script>
+    var app = new Injector();
+</script>
+<script>
+    app.provide('logger', function() {
+        var log = function(args) {
+            console.log(args);
+        };
+        return {
+            log: log
+        }
+    });
+</script>
+<script>
+    app.provide('loggerUser1', function(loggerUser2, loggerUser3) {
+        console.log('loggerUser1');
+        return {
+            
+        }
+    });
+    app.provide('loggerUser2', function(logger, loggerUser3) {
+        console.log('loggerUser2');
+        return {
+            
+        }
+    });
+    app.provide('loggerUser3', function(logger) {
+        console.log('loggerUser3');
+        return {
+            
+        }
+    });
+</script>
+</head>
+<body>
+    biG FOxiez
+</body>
+</html>
