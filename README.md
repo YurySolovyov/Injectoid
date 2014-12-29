@@ -1,11 +1,11 @@
-Injector
+Injectoid
 ========
-Injector helps you to compose your app using modules
+Injectoid helps you to compose your app using modules
 
 ###Usage
 
 ```javascript
-var app = new Injector();
+var app = new Injectoid();
 
 app.provide('logger', function() {
 
@@ -34,10 +34,10 @@ app.provide('messageHandler', function(logger) {
 ```
 ### API
 ### `Constructor`
-Creates new Injector instance. Should be used with `new`
+Creates new Injectoid instance. Should be used with `new`
 
 ```javascript
-var app = new Injector();
+var app = new Injectoid();
 ```
 ###`app.provide(moduleName, provider);`
 
