@@ -33,7 +33,7 @@ app.provide('logger', function() {
 });
 
 app.provide('messageHandler', function(logger) {
-  
+
   var handleMessage = function(message) {
     //some real code here
     logger.log(message);
@@ -70,7 +70,7 @@ Used to name module in an app.
 
 ###`app.run(resolvable);`
 Calls `resolvable` with resolved modules. Useful if you need to obtain a reference to some module, or call something just once.
-* `resolvable: [function]`. Called with resolved modules as arguments. 
+* `resolvable: [function]`. Called with resolved modules as arguments.
     * If some required modules are not available, `resolvable` function is put into a queue, as in `app.provide` case.
 
 ### License
