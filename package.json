@@ -1,6 +1,6 @@
 {
   "name": "injectoid",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "dependency injection helper inspired by Angular DI",
   "main": "dist/injectoid.js",
   "scripts": {
