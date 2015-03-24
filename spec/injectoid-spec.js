@@ -61,6 +61,12 @@ describe(".provide method", function () {
             });
         }).toThrow();
     });
+
+    it("should throw when passind undefined as provider", function() {
+        expect(function() {
+            app.provide('ModuleOne', undefined);
+        }).toThrow();
+    });
 });
 
 
@@ -71,11 +77,24 @@ describe(".run method", function () {
     });
 
     it("should recive registered modules", function() {
-        app.provide('Module', function() {
-            return { foo: 42 };
-        });
+        var moduleObj = { foo: 42 };
+
+        app.provide('Module', moduleObj);
         app.run(function(Module) {
-            expect(Module).toEqual({ foo: 42 });
+            expect(Module).toBe(moduleObj);
         });
+    });
+
+    it("should allow pending runs", function() {
+        var moduleOne = { foo: 42 };
+        var moduleTwo = { bar: 24 };
+
+        app.run(function(ModuleOne, ModuleTwo) {
+            expect(ModuleOne).toBe(moduleOne);
+            expect(ModuleTwo).toBe(moduleTwo);
+        });
+
+        app.provide('ModuleOne', moduleOne);
+        app.provide('ModuleTwo', moduleTwo);
     });
 });
