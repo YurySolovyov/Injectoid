@@ -48,67 +48,83 @@
         });
     };
 
+    var checkProviderType = function(provider) {
+        if (typeof provider === 'undefined') {
+            throw new TypeError("Provider must be a function, object or value");
+        }
+    };
+
+    var resolveAvailablePendingRuns = function(pendingRuns, readyModules) {
+        if (pendingRuns.length === 0) { return; }
+        pendingRuns.forEach(function(pendingRunInfo) {
+            var pendingRunArgs = pendingRunInfo.args;
+            var modulesReady = modulesAreReady(pendingRunArgs, readyModules);
+            if (!modulesReady) { return }
+            var runDependencies = buildDepsList(pendingRunArgs, readyModules);
+            invokeCallback(runDependencies, pendingRunInfo.callback);
+        });
+    };
+
     var Injectoid = function() {
         var self = this;
         var readyModules = {};
         var pendingModules = {};
         var pendingRuns = [];
 
-        var resolveAvailablePendingRuns = function() {
-            if (pendingRuns.length === 0) { return; }
-            pendingRuns.forEach(function(pendingRunInfo) {
-                var pendingRunArgs = pendingRunInfo.args;
-                var modulesReady = modulesAreReady(pendingRunArgs, readyModules);
-                if (!modulesReady) { return }
-                var runDependencies = buildDepsList(pendingRunArgs, readyModules);
-                invokeCallback(runDependencies, pendingRunInfo.callback);
-            });
+        var tryRegisterModule = function(moduleName, args, providerFunc) {
+            var modulesReady = modulesAreReady(args, readyModules);
+            if (modulesReady) {
+                var moduleDependencies = buildDepsList(args, readyModules);
+                var resolver = invokeCallback(moduleDependencies, providerFunc);
+                registerModule(moduleName, resolver);
+                tryResolvePendingModules();
+            }
+            return modulesReady;
         };
 
         var tryResolvePendingModules = function() {
             var pendingModulesKeys = Object.keys(pendingModules);
             if (pendingModulesKeys.length === 0) { return; }
-            pendingModulesKeys.forEach(function(pendingModuleName) {
-                var pendingCallback = pendingModules[pendingModuleName];
-                if (!pendingCallback) return;
-                resolveModules(pendingModuleName, pendingCallback)
+            pendingModulesKeys.forEach(function(moduleName) {
+                var moduleInfo = pendingModules[moduleName];
+                tryRegisterModule(moduleName, moduleInfo.args, moduleInfo.callback);
             });
         };
 
-        var resolveModule = function(moduleName, resolver) {
+        var registerModule = function(moduleName, moduleObj) {
             delete pendingModules[moduleName];
-            readyModules[moduleName] = resolver;
+            readyModules[moduleName] = moduleObj;
         };
 
         var resolveFunction = function(moduleName, func) {
             var args = parseFunctionArgs(func);
             checkForCircular(moduleName, args, pendingModules);
-            if (modulesAreReady(args, readyModules)) {
-                var moduleDependencies = buildDepsList(args, readyModules);
-                var resolver = invokeCallback(moduleDependencies, func);
-                resolveModule(moduleName, resolver);
-                tryResolvePendingModules();
-            } else {
-                pendingModules[moduleName] = func;
+            var registered = tryRegisterModule(moduleName, args, func);
+            if (!registered) {
+                pendingModules[moduleName] = {
+                    args: args,
+                    callback: func
+                };
             }
         };
 
         var resolveSimpleValue = function(moduleName, value) {
-            resolveModule(moduleName, value);
+            registerModule(moduleName, value);
             tryResolvePendingModules();
         };
 
-        var resolveModules = function(moduleName, provider) {
+        var resolveModule = function(moduleName, provider) {
+            checkProviderType(provider);
             if (typeof provider === 'function') {
                 resolveFunction(moduleName, provider);
             } else {
                 resolveSimpleValue(moduleName, provider);
             }
-            resolveAvailablePendingRuns();
+            resolveAvailablePendingRuns(pendingRuns, readyModules);
         };
 
         self.provide = function(moduleName, provider) {
-            resolveModules(moduleName, provider);
+            resolveModule(moduleName, provider);
             return self;
         };
 
