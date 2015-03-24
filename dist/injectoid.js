@@ -87,6 +87,7 @@
             if (pendingModulesKeys.length === 0) { return; }
             pendingModulesKeys.forEach(function(moduleName) {
                 var moduleInfo = pendingModules[moduleName];
+                if(!moduleInfo) { return; }
                 tryRegisterModule(moduleName, moduleInfo.args, moduleInfo.callback);
             });
         };
