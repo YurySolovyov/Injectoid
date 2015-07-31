@@ -35,9 +35,9 @@
     var checkForCircular = function(moduleName, moduleDependencies, pendingModules, checked) {
         var checked = checked || [];
         moduleDependencies.forEach(function(dependencyName) {
-            var pendingCallback = pendingModules[dependencyName];
-            if (!pendingCallback) return;
-            var callbackDeps = parseFunctionArgs(pendingCallback);
+            var pendingDepsInfo = pendingModules[dependencyName];
+            if (!pendingDepsInfo) return;
+            var callbackDeps = pendingDepsInfo.args || parseFunctionArgs(pendingDepsInfo);
             checked = checked.concat(callbackDeps);
             if (checked.indexOf(moduleName) > -1) {
                 var message = 'Circular dependency detected: ' + moduleName + ' <=> ' + dependencyName;
