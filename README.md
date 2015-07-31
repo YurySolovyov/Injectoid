@@ -1,6 +1,7 @@
-Injectoid
+Injectoid [![npm version](https://badge.fury.io/js/injectoid.svg)](http://badge.fury.io/js/injectoid)
 ========
 Injectoid helps you to compose your app using modules
+
 
 ###Installing
 npm:
