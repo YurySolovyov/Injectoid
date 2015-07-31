@@ -7,9 +7,7 @@ Injectoid helps you to compose your app using modules
 npm:
 
 `npm install injectoid`
-```javascript
-var Injectoid = require('injectoid').Injectoid;
-```
+
 browsers:
 
 Should work with require.js and common.js (not tested)
@@ -19,6 +17,7 @@ Works as global `Injectoid` constructor
 ###Usage
 
 ```javascript
+var Injectoid = require('injectoid').Injectoid;
 var app = new Injectoid();
 
 app.provide('logger', function() {
