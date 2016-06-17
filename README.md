@@ -74,4 +74,5 @@ Calls `resolvable` with resolved modules. Useful if you need to obtain a referen
     * If some required modules are not available, `resolvable` function is put into a queue, as in `app.provide` case.
 
 ### License
-The MIT License (MIT)
+
+MIT © Yury Solovyov
