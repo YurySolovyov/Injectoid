@@ -1,9 +1,13 @@
+DEPRECATED. DON'T USE IT. NAIVE IDEA. USE [WEBPACK](https://github.com/webpack/webpack) OR [ROLLUP](https://github.com/rollup/rollup)
+========
+
 Injectoid [![npm version](https://badge.fury.io/js/injectoid.svg)](http://badge.fury.io/js/injectoid)
 ========
 Injectoid helps you to compose your app using modules
 
 
-###Installing
+### Installing
+
 npm:
 
 `npm install injectoid`
@@ -14,7 +18,7 @@ Should work with require.js and common.js (not tested)
 or
 Works as global `Injectoid` constructor
 
-###Usage
+### Usage
 
 ```javascript
 var Injectoid = require('injectoid').Injectoid;
@@ -52,7 +56,7 @@ Creates new Injectoid instance. Should be used with `new`
 ```javascript
 var app = new Injectoid();
 ```
-###`app.provide(moduleName, provider);`
+### `app.provide(moduleName, provider);`
 
 Adds module to app with specified `moduleName`.
 * `moduleName: [string]`.
@@ -68,7 +72,7 @@ Used to name module in an app.
 
   * If value/object form is used, module gets immediately available as `moduleName`
 
-###`app.run(resolvable);`
+### `app.run(resolvable);`
 Calls `resolvable` with resolved modules. Useful if you need to obtain a reference to some module, or call something just once.
 * `resolvable: [function]`. Called with resolved modules as arguments.
     * If some required modules are not available, `resolvable` function is put into a queue, as in `app.provide` case.
